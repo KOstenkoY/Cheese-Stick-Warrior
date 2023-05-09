@@ -9,6 +9,8 @@ public class PlayerStateMachine : MonoBehaviour
     private float _appliedMovementX;
 
     [SerializeField] private float _jumpForce = 20f;
+    [SerializeField] private float _gravityMultiplier = 2f;
+    private float _gravityConstantScale = 6f;
 
     [SerializeField] private float _durationSliding = 0.5f;
 
@@ -23,6 +25,7 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _isStopPressed = false;
     private bool _isAccelerationRunPressed = false;
 
+    private bool _isGrounded = false;
 
     private Coroutine _currentSlideResetRoutine = null;
 
@@ -34,11 +37,14 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsSlidePressed { get{ return _isSlidePressed; } set { _isSlidePressed = value; } }
     public bool IsStopPressed { get{ return _isStopPressed; } set { _isStopPressed = value; } }
     public bool IsAccelerationRunPressed { get { return _isAccelerationRunPressed; } set { _isAccelerationRunPressed = value; } }
+    public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
 
     public float RunningSpeed { get { return _runningSpeed; } }
     public float JumpForce { get { return _jumpForce; } }
     public float AppliedMovementX { get { return _appliedMovementX; } set { _appliedMovementX = value; } }
     public float AccelerationMultiplier { get { return _accelerationMultiplier; } set { _accelerationMultiplier = value; } }
+    public float GravityMultiplier { get { return _gravityMultiplier; } set { _gravityMultiplier = value; } }
+    public float GravityConstantScale { get { return _gravityConstantScale; } }
     public float DurationSliding { get { return _durationSliding; } }
 
     public Coroutine CurrentSlideResetRoutine { get { return _currentSlideResetRoutine; } set { _currentSlideResetRoutine = value; } }
@@ -98,5 +104,13 @@ public class PlayerStateMachine : MonoBehaviour
     private void AccelerationRun(bool _isPressed)
     {
         _isAccelerationRunPressed = _isPressed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<BoxCollider2D>())
+        {
+            _isGrounded = true;
+        }
     }
 }
