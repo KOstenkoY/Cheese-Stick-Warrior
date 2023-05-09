@@ -8,15 +8,19 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!_ctx.IsStopPressed)
+        if (!Ctx.IsStopPressed)
         {
-            SwitchState(_factory.Run());
+            SwitchState(Factory.Run());
+        }
+        else if (Ctx.IsAccelerationRunPressed)
+        {
+            SwitchState(Factory.AccelerationRun());
         }
     }
 
     public override void EnterState()
     {
-        
+        Ctx.AppliedMovementX = 0;
     }
 
     public override void ExitState()

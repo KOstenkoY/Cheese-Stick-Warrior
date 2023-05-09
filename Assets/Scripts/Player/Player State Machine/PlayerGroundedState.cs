@@ -3,15 +3,20 @@ public class PlayerGroundedState : PlayerBaseState
     public PlayerGroundedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
         : base (currentContext, playerStateFactory)
     {
+        IsRootState = true;
         InitializeSubState();
     }
 
     public override void CheckSwitchStates()
     {
         // if player is grounded and jump is pressed, switch to jump state
-        if (_ctx.IsJumpPressed)
+        if (Ctx.IsJumpPressed)
         {
-            SwitchState(_factory.Jump());
+            SwitchState(Factory.Jump());
+        }
+        else if (Ctx.IsSlidePressed)
+        {
+            SwitchState(Factory.Slide());
         }
     }
 
@@ -26,17 +31,17 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void InitializeSubState()
     {
-        if (_ctx.IsSlidePressed)
+        if (Ctx.IsAccelerationRunPressed)
         {
-            SetSubState(_factory.Slide());
+            SetSubState(Factory.AccelerationRun());
         }
-        else if (_ctx.IsStopPressed)
+        else if (Ctx.IsStopPressed)
         {
-            SetSubState(_factory.Idle());
+            SetSubState(Factory.Idle());
         }
         else
         {
-            SetSubState(_factory.Run());
+            SetSubState(Factory.Run());
         }
     }
 

@@ -24,13 +24,13 @@ public class InputSystem : MonoBehaviour
         OnFire?.Invoke(true);
     }
 
-    protected void StopButtonPressed()
+    public void StopButtonPressed(bool isPressed)
     {
-        OnStop?.Invoke(true);
+        OnStop?.Invoke(isPressed);
     }
 
-    protected void AccelerationRunButtonPressed()
+    public void AccelerationRunButtonPressed(bool isPressed)
     {
-        OnAccelerationRun?.Invoke(true);
+        OnAccelerationRun?.Invoke(isPressed);
     }
 }

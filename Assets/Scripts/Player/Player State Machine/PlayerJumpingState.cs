@@ -9,14 +9,15 @@ public class PlayerJumpingState : PlayerBaseState
     public PlayerJumpingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
         : base(currentContext, playerStateFactory)
     {
-
+        IsRootState = true;
+        InitializeSubState();
     }
 
     public override void CheckSwitchStates()
     {
-        if(Physics2D.Raycast(_ctx.transform.position - new Vector3(0, _ctx.transform.localScale.y * _coefficient), Vector3.down, _rayDistance))
+        if(Physics2D.Raycast(Ctx.transform.position - new Vector3(0, Ctx.transform.localScale.y * _coefficient), Vector3.down, _rayDistance))
         {
-            SwitchState(_factory.Grounded());
+            SwitchState(Factory.Grounded());
         }
     }
 
@@ -27,12 +28,23 @@ public class PlayerJumpingState : PlayerBaseState
 
     public override void ExitState()
     {
-        _ctx.IsJumpPressed = false;
+        Ctx.IsJumpPressed = false;
     }
 
     public override void InitializeSubState()
     {
-        
+        if (Ctx.IsAccelerationRunPressed)
+        {
+            SetSubState(Factory.AccelerationRun());
+        }
+        else if (Ctx.IsStopPressed)
+        {
+            SetSubState(Factory.Idle());
+        }
+        else
+        {
+            SetSubState(Factory.Run());
+        }
     }
 
     public override void UpdateState()
@@ -42,11 +54,11 @@ public class PlayerJumpingState : PlayerBaseState
 
     private void HandleJump()
     {
-        bool _isGrounded = Physics2D.Raycast(_ctx.transform.position - new Vector3(0, _ctx.transform.localScale.y * _coefficient), Vector3.down, _rayDistance);
+        bool _isGrounded = Physics2D.Raycast(Ctx.transform.position - new Vector3(0, Ctx.transform.localScale.y * _coefficient), Vector3.down, _rayDistance);
 
         if (_isGrounded)
         {
-            _ctx.Rigidbody.AddForce(Vector3.up * _ctx.JumpForce, ForceMode2D.Impulse);
+            Ctx.Rigidbody.AddForce(Vector3.up * Ctx.JumpForce, ForceMode2D.Impulse);
         }
     }
 }

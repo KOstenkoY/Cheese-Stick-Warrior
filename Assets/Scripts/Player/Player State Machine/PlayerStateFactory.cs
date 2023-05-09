@@ -17,6 +17,11 @@ public class PlayerStateFactory
         return new PlayerRunningState(_context, this);
     }
 
+    public PlayerBaseState AccelerationRun()
+    {
+        return new PlayerAccelerationState(_context, this);
+    }
+
     public PlayerBaseState Jump() 
     { 
         return new PlayerJumpingState(_context, this);

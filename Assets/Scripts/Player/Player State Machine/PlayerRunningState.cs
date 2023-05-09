@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerRunningState : PlayerBaseState
 {
     public PlayerRunningState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
@@ -8,19 +10,19 @@ public class PlayerRunningState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsStopPressed)
+        if (Ctx.IsStopPressed)
         {
-            SwitchState(_factory.Idle());
+            SwitchState(Factory.Idle());
         }
-        else if (_ctx.IsSlidePressed)
+        else if (Ctx.IsAccelerationRunPressed)
         {
-            SwitchState(_factory.Slide());
+            SwitchState(Factory.AccelerationRun());
         }
     }
 
     public override void EnterState()
     {
-       
+        Ctx.AppliedMovementX = Ctx.RunningSpeed;
     }
 
     public override void ExitState()
@@ -36,5 +38,6 @@ public class PlayerRunningState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        Ctx.transform.Translate(Vector3.forward * Ctx.AppliedMovementX * Time.deltaTime);
     }
 }
