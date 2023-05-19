@@ -3,8 +3,6 @@ using UnityEngine;
 public class PlayerJumpingState : PlayerBaseState
 {
     private const float _rayDistance = 0.2f;
-    // coefficient for finding the lower coordinate of the player from which the ray is launched
-    private const float _coefficient = 2.05f;
 
     public PlayerJumpingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
         : base(currentContext, playerStateFactory)
@@ -65,7 +63,7 @@ public class PlayerJumpingState : PlayerBaseState
 
     private void HandleJump()
     {
-        bool _isGrounded = Physics2D.Raycast(Ctx.transform.position - new Vector3(0, Ctx.transform.localScale.y * _coefficient), Vector3.down, _rayDistance);
+        bool _isGrounded = Physics2D.Raycast(Ctx.transform.position - new Vector3(0, Ctx.transform.localScale.y), Vector3.down, _rayDistance);
 
         if (_isGrounded)
         {

@@ -26,6 +26,7 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _isAccelerationRunPressed = false;
 
     private bool _isGrounded = false;
+    private bool _isSliding = false;
 
     private Coroutine _currentSlideResetRoutine = null;
 
@@ -38,6 +39,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsStopPressed { get{ return _isStopPressed; } set { _isStopPressed = value; } }
     public bool IsAccelerationRunPressed { get { return _isAccelerationRunPressed; } set { _isAccelerationRunPressed = value; } }
     public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
+    public bool IsSliding { get { return _isSliding; } set { _isSliding = value; } }
 
     public float RunningSpeed { get { return _runningSpeed; } }
     public float JumpForce { get { return _jumpForce; } }

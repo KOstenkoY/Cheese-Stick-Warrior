@@ -13,24 +13,30 @@ public class PlayerSlidingState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsJumpPressed)
+        if(!Ctx.IsSliding || Ctx.IsJumpPressed)
         {
+            // when player jump, stop sliding and cansel IsJumpPressed
+            Ctx.IsJumpPressed = false;
+
             SwitchState(Factory.Grounded());
-        }
-        else if (Ctx.IsJumpPressed)
-        {
-            SwitchState(Factory.Idle());
         }
     }
 
     public override void EnterState()
     {
         Ctx.CurrentSlideResetRoutine = Ctx.StartCoroutine(ISlideResetRoutine());
+
+        Ctx.IsSliding = true;
     }
 
     public override void ExitState()
     {
+        Ctx.IsSlidePressed = false;
+        Ctx.IsSliding = false;
+
         Ctx.StopCoroutine(Ctx.CurrentSlideResetRoutine);
+
+        StopSliding();
     }
 
     public override void InitializeSubState()
@@ -56,10 +62,30 @@ public class PlayerSlidingState : PlayerBaseState
 
     private IEnumerator ISlideResetRoutine()
     {
+        // logic for sliding
+        
+        //
+        
         Ctx.transform.DORotate(Vector3.forward * 70, Ctx.DurationSliding);
 
         yield return new WaitForSeconds(Ctx.DurationSliding);
 
-        Ctx.transform.DORotate(Vector3.zero, Ctx.DurationSliding);
+        Ctx.transform.DORotate(Vector3.zero, Ctx.DurationSliding - 0.3f);
+
+        Ctx.IsSliding = false;
+    }
+
+    private IEnumerator IStartSlidingRoutine()
+    {
+        Ctx.transform.DORotate(Vector3.forward * 70, Ctx.DurationSliding);
+
+        yield return new WaitForSeconds(Ctx.DurationSliding);
+
+        Ctx.IsSlidePressed = false;
+    }
+
+    private void StopSliding()
+    {
+        Ctx.transform.DORotate(Vector3.zero, Ctx.DurationSliding - 0.3f);
     }
 }
