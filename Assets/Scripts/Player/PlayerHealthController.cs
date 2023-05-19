@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
 {
-    public float _reducingCoefficient = 0.03f;
+    public float _reducingValue = 0.03f;
     [SerializeField] private float _minPlayerSize = 0.1f;
 
-    public float ReducingCoefficient { get { return _reducingCoefficient; } set { _reducingCoefficient = value; } }
+    public float ReducingValue { get { return _reducingValue; } set { _reducingValue = value; } }
 
     private Coroutine _decreasePlayerRoutine;
 
@@ -22,7 +22,7 @@ public class PlayerHealthController : MonoBehaviour
         while (transform.localScale.y >= _minPlayerSize)
         {
             yield return new WaitForEndOfFrame();
-            transform.localScale -= new Vector3(0, _reducingCoefficient * Time.deltaTime, 0);
+            transform.localScale -= new Vector3(0, _reducingValue * Time.deltaTime, 0);
         }
 
         KillPlayer();
