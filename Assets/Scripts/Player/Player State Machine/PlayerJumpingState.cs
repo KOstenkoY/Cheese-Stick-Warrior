@@ -63,7 +63,7 @@ public class PlayerJumpingState : PlayerBaseState
 
     private void HandleJump()
     {
-        bool _isGrounded = Physics2D.Raycast(Ctx.transform.position - new Vector3(0, Ctx.transform.localScale.y), Vector3.down, _rayDistance);
+        bool _isGrounded = Physics2D.Raycast(Ctx.transform.position, Vector3.down, _rayDistance);
 
         if (_isGrounded)
         {
