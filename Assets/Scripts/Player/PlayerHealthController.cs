@@ -31,6 +31,11 @@ public class PlayerHealthController : MonoBehaviour
         transform.localScale += new Vector3(0, additionalSize, 0);
     }
 
+    public void ReducePlayer()
+    {
+        
+    }
+
     private IEnumerator IDecreasePlayerRoutine()
     {
         while (transform.localScale.y >= _minPlayerSize)
