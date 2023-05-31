@@ -7,7 +7,7 @@ public class InputSystem : MonoBehaviour
     public static event Action<bool> OnSlide;
     public static event Action<bool> OnStop;
     public static event Action<bool> OnAccelerationRun;
-    public static event Action<bool> OnFire;
+    public static event Action OnFire;
 
     protected void JumpPressed()
     {
@@ -21,7 +21,7 @@ public class InputSystem : MonoBehaviour
 
     protected void FirePressed()
     {
-        OnFire?.Invoke(true);
+        OnFire?.Invoke();
     }
 
     public void StopButtonPressed(bool isPressed)
