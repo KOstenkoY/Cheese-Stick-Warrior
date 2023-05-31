@@ -4,9 +4,9 @@ using UnityEngine;
 public class PlayerHealthController : MonoBehaviour
 {
     [SerializeField] private float _minPlayerSize = 0.1f;
-    [SerializeField] private float _reducingPlayerValue = 0.03f;
+    [SerializeField] private float _reducingPlayerValueOverLifeTime = 0.03f;
 
-    public float ReducingValue { get { return _reducingPlayerValue; } set { _reducingPlayerValue = value; } }
+    public float ReducingPlayerValueOverLifeTime { get { return _reducingPlayerValueOverLifeTime; } set { _reducingPlayerValueOverLifeTime = value; } }
 
     private Coroutine _decreasePlayerRoutine;
 
@@ -31,9 +31,9 @@ public class PlayerHealthController : MonoBehaviour
         transform.localScale += new Vector3(0, additionalSize, 0);
     }
 
-    public void ReducePlayer()
+    public void ReducePlayer(float reducingValue)
     {
-        
+        transform.localScale -= new Vector3(0, reducingValue, 0);
     }
 
     private IEnumerator IDecreasePlayerRoutine()
@@ -41,7 +41,7 @@ public class PlayerHealthController : MonoBehaviour
         while (transform.localScale.y >= _minPlayerSize)
         {
             yield return new WaitForEndOfFrame();
-            transform.localScale -= new Vector3(0, _reducingPlayerValue * Time.deltaTime, 0);
+            transform.localScale -= new Vector3(0, _reducingPlayerValueOverLifeTime * Time.deltaTime, 0);
         }
 
         KillPlayer();

@@ -5,6 +5,7 @@ public class Bullet : Poolable
 {
     [SerializeField] private float _bulletSpeed = 9f;
     [SerializeField] private float _bulletLifeTimeInSSeconds = 3f;
+    [SerializeField] private int _damage = 1;
 
     private void OnEnable()
     {
@@ -18,7 +19,12 @@ public class Bullet : Poolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ReleaseObject();
+        if (collision.TryGetComponent<Enemy>(out Enemy enemyComponent)) 
+        {
+            enemyComponent.TakeDamage(_damage);
+
+            ReleaseObject();
+        }
     }
 
     private IEnumerator BulletLifeManagerRoutine()

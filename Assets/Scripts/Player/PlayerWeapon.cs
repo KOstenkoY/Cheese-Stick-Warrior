@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
+    [SerializeField] private float _reducingPlayerValueAfterShooting = 0.05f;
+
     [SerializeField] private Transform _bulletSpawnPosition;
     [SerializeField] private ObjectPool _bulletPool;
 
@@ -27,7 +29,7 @@ public class PlayerWeapon : MonoBehaviour
     public void Shoot()
     {
         // after shoot reduce player size
-        _playerHealthController.ReducePlayer();
+        _playerHealthController.ReducePlayer(_reducingPlayerValueAfterShooting);
 
         GameObject bullet = SpawnBullet();
     }

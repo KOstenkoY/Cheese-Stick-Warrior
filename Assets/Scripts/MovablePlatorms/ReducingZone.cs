@@ -15,9 +15,9 @@ public class ReducingZone : MonoBehaviour
     {
         if (collision.TryGetComponent<PlayerHealthController>(out PlayerHealthController playerHealthControllerComponent))
         {
-            _reducingPlayerValue = playerHealthControllerComponent.ReducingValue;
+            _reducingPlayerValue = playerHealthControllerComponent.ReducingPlayerValueOverLifeTime;
 
-            playerHealthControllerComponent.ReducingValue = _newReducingPlayerValue + _reducingPlayerCoefficient;
+            playerHealthControllerComponent.ReducingPlayerValueOverLifeTime = _newReducingPlayerValue + _reducingPlayerCoefficient;
         }
     }
 
@@ -25,7 +25,7 @@ public class ReducingZone : MonoBehaviour
     {
         if (collision.TryGetComponent<PlayerHealthController>(out PlayerHealthController playerHealthControllerComponent))
         {
-            playerHealthControllerComponent.ReducingValue = _reducingPlayerValue;
+            playerHealthControllerComponent.ReducingPlayerValueOverLifeTime = _reducingPlayerValue;
         }
     }
 }
